@@ -1,0 +1,307 @@
+class PhoneSeries:
+    def __init__(self, series, ram, storage, processor, color, graphics, height, weight,
+                 series_prices, ram_prices, storage_prices, processor_prices, color_prices, graphics_prices,
+                 height_prices, weight_prices):
+        self.series = series
+        self.ram = ram
+        self.storage = storage
+        self.processor = processor
+        self.color = color
+        self.graphics = graphics
+        self.height = height
+        self.weight = weight
+        self.series_prices = series_prices
+        self.ram_prices = ram_prices
+        self.storage_prices = storage_prices
+        self.processor_prices = processor_prices
+        self.color_prices = color_prices
+        self.graphics_prices = graphics_prices
+        self.height_prices = height_prices
+        self.weight_prices = weight_prices
+
+    def display_options(self, attribute_name, attribute_list):
+        print(f"\n{attribute_name} Options:")
+        for i, option in enumerate(attribute_list):
+            print(f"{i + 1}. {option}")
+
+    def get_client_choice(self, attribute_list, attribute_name):
+        while True:
+            self.display_options(attribute_name, attribute_list)
+            try:
+                choice = int(input(f"Enter your choice for {attribute_name}: ")) - 1
+                if 0 <= choice < len(attribute_list):
+                    return choice
+                else:
+                    print("Invalid choice. Please try again.")
+            except ValueError:
+                print("Invalid input. Please enter a number.")
+
+    def get_price(self, attribute_name, choice_index):
+        attribute_price_dict = {
+            "series": self.series_prices,
+            "ram": self.ram_prices,
+            "storage": self.storage_prices,
+            "processor": self.processor_prices,
+            "color": self.color_prices,
+            "graphics": self.graphics_prices,
+            "height": self.height_prices,
+            "weight": self.weight_prices
+        }
+        return attribute_price_dict[attribute_name][choice_index]
+
+
+class PhoneBrand:
+    def __init__(self, name, phone_series):
+        self.name = name
+        self.phone_series = phone_series
+
+    def select_attributes(self):
+        print(f"\n{self.name} Options:")
+        series_index = self.phone_series.get_client_choice(self.phone_series.series, "Series Names")
+        ram_index = self.phone_series.get_client_choice(self.phone_series.ram, "RAM")
+        storage_index = self.phone_series.get_client_choice(self.phone_series.storage, "Storage")
+        processor_index = self.phone_series.get_client_choice(self.phone_series.processor, "Processor")
+        # Default choices for remaining attributes
+        graphics_index = 0
+        height_index = 0
+        weight_index = 0
+
+        total_price = (
+                self.phone_series.get_price("series", series_index) +
+                self.phone_series.get_price("ram", ram_index) +
+                self.phone_series.get_price("storage", storage_index) +
+                self.phone_series.get_price("processor", processor_index) +
+                self.phone_series.get_price("graphics", graphics_index) +
+                self.phone_series.get_price("height", height_index) +
+                self.phone_series.get_price("weight", weight_index)
+        )
+
+        print("\nSelected Options:")
+        print(f"Series Names: {self.phone_series.series[series_index]}")
+        print(f"RAM: {self.phone_series.ram[ram_index]}")
+        print(f"Storage: {self.phone_series.storage[storage_index]}")
+        print(f"Processor: {self.phone_series.processor[processor_index]}")
+        print(f"Graphics: {self.phone_series.graphics[graphics_index]}")
+        print(f"Height: {self.phone_series.height[height_index]}")
+        print(f"Weight: {self.phone_series.weight[weight_index]}")
+
+        # Return the total price
+        return total_price
+
+
+class SamsungPhoneBrand(PhoneBrand):
+    def __init__(self):
+        samsung_series = [
+            "Samsung Galaxy S Series", "Samsung Galaxy Note Series", "Samsung Galaxy A Series",
+            "Samsung Galaxy M Series", "Samsung Galaxy Fold Series", "Samsung Galaxy Z Series",
+            "Samsung Galaxy XCover Series", "Samsung Galaxy J Series", "Samsung Galaxy Tab Series",
+            "Samsung Galaxy Watch Series"
+        ]
+        samsung_ram = [
+            "Up to 12 GB", "Up to 12 GB", "Up to 8 GB", "Up to 8 GB", "Up to 12 GB", "Up to 12 GB",
+            "Up to 6 GB", "Up to 4 GB", "Up to 8 GB", "1.5 GB"
+        ]
+        samsung_storage = [
+            "Up to 1 TB", "Up to 1 TB", "Up to 256 GB", "Up to 256 GB", "Up to 512 GB", "Up to 512 GB",
+            "Up to 128 GB", "Up to 64 GB", "Up to 1 TB", "8 GB"
+        ]
+        samsung_processor = [
+            "Exynos or Snapdragon (varies by region)", "Exynos or Snapdragon (varies by region)",
+            "Snapdragon", "Exynos or Snapdragon", "Snapdragon", "Snapdragon", "Exynos or Snapdragon",
+            "Exynos", "Snapdragon", "Exynos"
+        ]
+        samsung_color = [
+            "Various options", "Various options", "Various options", "Various options", "Various options",
+            "Various options", "Various options", "Various options", "Various options", "Various options"
+        ]
+        samsung_graphics = [
+            "Advanced", "Advanced", "Good for mid-range", "Good for mid-range", "Advanced", "Advanced",
+            "Suitable for rugged use", "Entry to mid-range", "Good for tablets", "Suitable for smartwatches"
+        ]
+        samsung_height = [
+            "Varies by model", "Varies by model", "Varies by model", "Varies by model",
+            "Folded and unfolded dimensions",
+            "Varies by model", "Varies by model", "Varies by model", "Varies by model", "Varies by model"
+        ]
+        samsung_weight = [
+            "Varies by model", "Varies by model", "Varies by model", "Varies by model", "Varies by model",
+            "Varies by model", "Varies by model", "Varies by model", "Varies by model", "Varies by model"
+        ]
+        samsung_series_prices = [1000, 1200, 700, 400, 1400, 1500, 600, 250, 300, 400]
+        samsung_ram_prices = [200, 200, 150, 100, 300, 250, 150, 100, 50, 100]
+        samsung_storage_prices = [300, 300, 200, 100, 400, 400, 250, 150, 100, 150]
+        samsung_processor_prices = [250, 250, 200, 150, 300, 250, 200, 150, 100, 150]
+        samsung_color_prices = [0] * 10  # Assume color is free
+        samsung_graphics_prices = [300, 300, 200, 150, 350, 300, 200, 150, 150, 200]
+        samsung_height_prices = [0] * 10  # Assume height is free
+        samsung_weight_prices = [0] * 10  # Assume weight is free
+
+        samsung_phone_series = PhoneSeries(
+            series=samsung_series, ram=samsung_ram, storage=samsung_storage, processor=samsung_processor,
+            color=samsung_color, graphics=samsung_graphics, height=samsung_height,
+            weight=samsung_weight, series_prices=samsung_series_prices, ram_prices=samsung_ram_prices,
+            storage_prices=samsung_storage_prices, processor_prices=samsung_processor_prices,
+            color_prices=samsung_color_prices, graphics_prices=samsung_graphics_prices,
+            height_prices=samsung_height_prices, weight_prices=samsung_weight_prices
+        )
+        super().__init__("Samsung", samsung_phone_series)
+
+
+class OppoPhoneBrand(PhoneBrand):
+    def __init__(self):
+        oppo_series = [
+            "Oppo Find Series", "Oppo Reno Series", "Oppo A Series", "Oppo F Series",
+            "Oppo K Series", "Oppo X Series", "Oppo A Series", "Oppo N Series", "Oppo F Series", "Oppo Reno Series"
+        ]
+        oppo_ram = [
+            "Up to 12 GB", "Up to 12 GB", "Up to 8 GB", "Up to 6 GB", "Up to 8 GB", "Up to 12 GB",
+            "Up to 8 GB", "Up to 12 GB", "Up to 8 GB", "Up to 12 GB"
+        ]
+        oppo_storage = [
+            "Up to 256 GB", "Up to 256 GB", "Up to 128 GB", "Up to 128 GB", "Up to 256 GB", "Up to 512 GB",
+            "Up to 256 GB", "Up to 256 GB", "Up to 128 GB", "Up to 256 GB"
+        ]
+        oppo_processor = [
+            "Snapdragon", "Snapdragon", "MediaTek", "Snapdragon", "MediaTek", "Snapdragon",
+            "Snapdragon", "MediaTek", "MediaTek", "Snapdragon"
+        ]
+        oppo_color = [
+            "Various options", "Various options", "Various options", "Various options", "Various options",
+            "Various options", "Various options", "Various options", "Various options", "Various options"
+        ]
+        oppo_graphics = [
+            "Advanced", "Advanced", "Good for mid-range", "Good for mid-range", "Advanced", "Advanced",
+            "Good for mid-range", "Advanced", "Good for mid-range", "Advanced"
+        ]
+        oppo_height = [
+            "Varies by model", "Varies by model", "Varies by model", "Varies by model", "Varies by model",
+            "Varies by model", "Varies by model", "Varies by model", "Varies by model", "Varies by model"
+        ]
+        oppo_weight = [
+            "Varies by model", "Varies by model", "Varies by model", "Varies by model", "Varies by model",
+            "Varies by model", "Varies by model", "Varies by model", "Varies by model", "Varies by model"
+        ]
+        oppo_series_prices = [700, 600, 500, 400, 550, 800, 600, 750, 500, 600]
+        oppo_ram_prices = [150, 150, 100, 100, 150, 200, 150, 200, 100, 150]
+        oppo_storage_prices = [200, 200, 150, 100, 200, 300, 200, 250, 150, 200]
+        oppo_processor_prices = [200, 200, 150, 150, 200, 250, 150, 200, 150, 200]
+        oppo_color_prices = [0] * 10  # Assume color is free
+        oppo_graphics_prices = [250, 250, 200, 200, 250, 300, 200, 250, 200, 250]
+        oppo_height_prices = [0] * 10  # Assume height is free
+        oppo_weight_prices = [0] * 10  # Assume weight is free
+
+        oppo_phone_series = PhoneSeries(
+            series=oppo_series, ram=oppo_ram, storage=oppo_storage, processor=oppo_processor,
+            color=oppo_color, graphics=oppo_graphics, height=oppo_height, weight=oppo_weight,
+            series_prices=oppo_series_prices, ram_prices=oppo_ram_prices,
+            storage_prices=oppo_storage_prices, processor_prices=oppo_processor_prices,
+            color_prices=oppo_color_prices, graphics_prices=oppo_graphics_prices,
+            height_prices=oppo_height_prices, weight_prices=oppo_weight_prices
+        )
+        super().__init__("Oppo", oppo_phone_series)
+
+
+class VivoPhoneBrand(PhoneBrand):
+    def __init__(self):
+        vivo_series = [
+            "Vivo X Series", "Vivo V Series", "Vivo Y Series", "Vivo S Series",
+            "Vivo NEX Series", "Vivo Z Series", "Vivo iQOO Series", "Vivo U Series", "Vivo Y Series", "Vivo X Series"
+        ]
+        vivo_ram = [
+            "Up to 12 GB", "Up to 12 GB", "Up to 8 GB", "Up to 8 GB", "Up to 12 GB", "Up to 12 GB",
+            "Up to 12 GB", "Up to 8 GB", "Up to 8 GB", "Up to 12 GB"
+        ]
+        vivo_storage = [
+            "Up to 256 GB", "Up to 256 GB", "Up to 128 GB", "Up to 128 GB", "Up to 256 GB", "Up to 512 GB",
+            "Up to 256 GB", "Up to 128 GB", "Up to 256 GB", "Up to 256 GB"
+        ]
+        vivo_processor = [
+            "Snapdragon", "Snapdragon", "MediaTek", "Snapdragon", "Snapdragon", "Snapdragon",
+            "Snapdragon", "MediaTek", "Snapdragon", "Snapdragon"
+        ]
+        vivo_color = [
+            "Various options", "Various options", "Various options", "Various options", "Various options",
+            "Various options", "Various options", "Various options", "Various options", "Various options"
+        ]
+        vivo_graphics = [
+            "Advanced", "Advanced", "Good for mid-range", "Good for mid-range", "Advanced", "Advanced",
+            "Advanced", "Good for mid-range", "Advanced", "Advanced"
+        ]
+        vivo_height = [
+            "Varies by model", "Varies by model", "Varies by model", "Varies by model", "Varies by model",
+            "Varies by model", "Varies by model", "Varies by model", "Varies by model", "Varies by model"
+        ]
+        vivo_weight = [
+            "Varies by model", "Varies by model", "Varies by model", "Varies by model", "Varies by model",
+            "Varies by model", "Varies by model", "Varies by model", "Varies by model", "Varies by model"
+        ]
+        vivo_series_prices = [800, 700, 500, 600, 900, 1000, 850, 600, 700, 800]
+        vivo_ram_prices = [200, 200, 150, 150, 250, 300, 250, 150, 200, 250]
+        vivo_storage_prices = [250, 250, 200, 200, 300, 400, 300, 200, 250, 300]
+        vivo_processor_prices = [250, 250, 200, 200, 300, 350, 300, 200, 250, 300]
+        vivo_color_prices = [0] * 10  # Assume color is free
+        vivo_graphics_prices = [300, 300, 200, 200, 350, 400, 350, 200, 300, 350]
+        vivo_height_prices = [0] * 10  # Assume height is free
+        vivo_weight_prices = [0] * 10  # Assume weight is free
+
+        vivo_phone_series = PhoneSeries(
+            series=vivo_series, ram=vivo_ram, storage=vivo_storage, processor=vivo_processor,
+            color=vivo_color, graphics=vivo_graphics, height=vivo_height, weight=vivo_weight,
+            series_prices=vivo_series_prices, ram_prices=vivo_ram_prices,
+            storage_prices=vivo_storage_prices, processor_prices=vivo_processor_prices,
+            color_prices=vivo_color_prices, graphics_prices=vivo_graphics_prices,
+            height_prices=vivo_height_prices, weight_prices=vivo_weight_prices
+        )
+        super().__init__("Vivo", vivo_phone_series)
+
+
+# Example usage
+def main():
+    print("Hello Sir, welcome to our shop!")
+
+    attempts = 3
+    while attempts > 0:
+        yesno = input("Would you like to buy a mobile? (yes/no): ").strip().lower()
+        if yesno == "yes":
+            print("Thanks for selecting our shop! Here:")
+            print("Select Brand:")
+            brands = ["Samsung", "Oppo", "Vivo"]
+
+            # Create a dummy PhoneSeries instance to call get_client_choice
+            dummy_phone_series = PhoneSeries(
+                series=[], ram=[], storage=[], processor=[], color=[], graphics=[],
+                height=[], weight=[],
+                series_prices=[], ram_prices=[], storage_prices=[], processor_prices=[],
+                color_prices=[], graphics_prices=[],
+                height_prices=[], weight_prices=[]
+            )
+            brand_choice_index = dummy_phone_series.get_client_choice(brands, "Brand")
+            brand_choice = brands[brand_choice_index]
+
+            if brand_choice == "Samsung":
+                brand = SamsungPhoneBrand()
+            elif brand_choice == "Oppo":
+                brand = OppoPhoneBrand()
+            elif brand_choice == "Vivo":
+                brand = VivoPhoneBrand()
+            else:
+                print("Invalid choice.")
+                return
+
+            total_price = brand.select_attributes()
+            print(f"\nTotal price: ${total_price:.2f}")
+            return
+
+        elif yesno == "no":
+            print("Ok, sir. Thanks!")
+            return
+
+        else:
+            attempts -= 1
+            print(f"Invalid choice. You have {attempts} more chance(s).")
+
+    print("Sorry, you have used all your chances. Please come back later.")
+
+
+if __name__ == "__main__":
+    main()
